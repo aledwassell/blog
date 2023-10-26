@@ -28,11 +28,11 @@ async function createTodo(data: FormData) {
 
 export default function NewPage() {
   return (
-    <>
+    <div className="p-14">
       <header className="flex justify-between items-center mb-4">
         <h1 className="text-2xl">New Page</h1>
       </header>
-      <form className="flex gap-2 flex-col" action={createTodo}>
+      <form className="flex gap-2 flex-col max-w-lg" action={createTodo}>
         <input
           type="text"
           required
@@ -63,6 +63,6 @@ export default function NewPage() {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 }
