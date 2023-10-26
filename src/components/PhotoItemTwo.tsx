@@ -23,7 +23,6 @@ export function PhotoItemTwo({
 }: PhotoItemProps) {
   return (
     <div className="flex w-full sm:w-1/2 aspect-video relative group">
-      Hello
       <Image src={src} fill alt={title} style={{objectFit: 'cover'}} />
       <div className="flex gap-2 w-full justify-between absolute bottom-0 opacity-0 group-hover:opacity-100 transition-opacity">
         <span className="bg-slate-50 mt-auto justify-self-end ml-4">
