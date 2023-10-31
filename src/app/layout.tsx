@@ -14,10 +14,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en">
-      <body
-        className={`${workSans.className} bg-slate-100 text-slate-600`}
-      >
+    <html lang="en" className="h-full overflow-hidden">
+      <body className={`${workSans.className} h-full bg-slate-100 text-slate-600`}>
         {children}
       </body>
     </html>
