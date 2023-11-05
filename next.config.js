@@ -14,7 +14,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'live.staticflickr.com',
+        hostname: 'res.cloudinary.com',
         port: '',
         pathname: '/**',
       },
