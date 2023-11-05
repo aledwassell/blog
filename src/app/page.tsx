@@ -1,34 +1,12 @@
 import Link from 'next/link';
 import prisma from '../db';
-import {TodoItem} from '@/components/TodoItem';
-import {redirect} from 'next/navigation';
 import {PhotoItem} from '@/components/PhotoItem';
-import {PhotoItemTwo} from '@/components/PhotoItemTwo';
-
-function getTodos() {
-  return prisma.todo.findMany();
-}
 
 function getPhotos() {
   return prisma.photo.findMany();
 }
 
-async function toggleTodo(id: string, complete: boolean) {
-  'use server';
-
-  await prisma.todo.update({where: {id}, data: {complete}});
-}
-
-async function deleteTodo(id: string) {
-  'use server';
-
-  await prisma.todo.delete({where: {id}});
-
-  redirect('/');
-}
-
 export default async function Home() {
-  const todos = await getTodos();
   const photos = await getPhotos();
 
   return (
@@ -40,15 +18,9 @@ export default async function Home() {
         </Link>
       </header>
 
-      {/* <div className="flex gap-8 items-center">
-        {photos.map((photo, index) => (
-          <PhotoItem key={photo.id} {...photo} number={index + 1} />
-        ))}
-      </div> */}
-
       <div className="flex flex-wrap">
         {photos.map((photo, index) => (
-          <PhotoItemTwo key={photo.id} {...photo} number={index + 1} />
+          <PhotoItem key={photo.id} {...photo} number={index + 1} />
         ))}
       </div>
 
