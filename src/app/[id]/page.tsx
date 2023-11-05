@@ -25,34 +25,34 @@ export default async function Photo({params}: PhotoProps) {
 
   return (
     photo && (
-      <div className="relative h-full">
+      <div className="h-screen">
         <Link href="/">
           <AiOutlineClose className="absolute left-10 top-10 text-slate-600 z-10 h-12 w-12" />
         </Link>
-        <MotionDiv
-          initial="visible"
-          animate="hidden"
-          variants={{
-            visible: {
-              opacity: 1,
-            },
-            hidden: {
-              opacity: 0.4,
-              transition: {
-                delay: 0.2,
-                duration: 0.8,
+        {/* <MotionDiv
+            initial="visible"
+            animate="hidden"
+            variants={{
+              visible: {
+                opacity: 1,
               },
-            },
-          }}
-        >
-          <Image
-            className="z-0"
-            src={photo.src}
-            fill
-            alt={photo.title}
-            style={{objectFit: 'cover'}}
-          />
-        </MotionDiv>
+              hidden: {
+                opacity: 0.4,
+                transition: {
+                  delay: 0.2,
+                  duration: 0.8,
+                },
+              },
+            }}
+          > */}
+        <Image
+          className="absolute -z-10"
+          src={photo.src}
+          fill
+          alt={photo.title}
+          style={{objectFit: 'cover'}}
+        />
+        {/* </MotionDiv> */}
       </div>
     )
   );
