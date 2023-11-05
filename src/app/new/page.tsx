@@ -2,7 +2,7 @@ import prisma from '@/db';
 import {redirect} from 'next/navigation';
 import Link from 'next/link';
 
-async function createTodo(data: FormData) {
+async function createPhoto(data: FormData) {
   'use server';
 
   const title = data.get('title')?.valueOf();
@@ -22,7 +22,7 @@ async function createTodo(data: FormData) {
   }
 
   await prisma.photo
-    .create({data: {title, src, year, width: 300, height: 300}})
+    .create({data: {title, src, year}})
     .then(() => redirect('/'));
 }
 
@@ -32,7 +32,7 @@ export default function NewPage() {
       <header className="flex justify-between items-center mb-4">
         <h1 className="text-2xl">New Page</h1>
       </header>
-      <form className="flex gap-2 flex-col max-w-lg" action={createTodo}>
+      <form className="flex gap-2 flex-col max-w-lg" action={createPhoto}>
         <input
           type="text"
           required
