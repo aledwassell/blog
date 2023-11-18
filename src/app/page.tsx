@@ -1,9 +1,18 @@
 import Link from 'next/link';
-import prisma from '../db';
 import {PhotoItem} from '@/components/PhotoItem';
+import {collection, getDocs} from 'firebase/firestore';
+import {db} from '@/firebase/config';
 
-function getPhotos() {
-  return prisma.photo.findMany();
+async function getPhotos() {
+  'use server';
+
+  const photos = await getDocs(collection(db, 'photos'));
+
+  return photos.docs.map((doc) => {
+    const {title, src, year} = doc.data();
+
+    return {id: doc.id, title, src, year};
+  });
 }
 
 export default async function Home() {
