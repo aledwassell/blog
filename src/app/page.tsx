@@ -21,10 +21,7 @@ export default async function Home() {
   return (
     <>
       <header className="flex justify-between items-center py-12 px-8">
-        <h1 className="text-2xl">\ ALED WASSELL</h1>
-        <Link href="/new" className="button">
-          New
-        </Link>
+        <h1 className="text-2xl self-start">\ ALED WASSELL</h1>
       </header>
 
       <div className="flex flex-wrap">
