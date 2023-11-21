@@ -1,9 +1,17 @@
-import Link from 'next/link';
-import prisma from '../db';
 import {PhotoItem} from '@/components/PhotoItem';
+import {collection, getDocs} from 'firebase/firestore';
+import {db} from '@/firebase/config';
 
-function getPhotos() {
-  return prisma.photo.findMany();
+async function getPhotos() {
+  'use server';
+
+  const photos = await getDocs(collection(db, 'photos'));
+
+  return photos.docs.map((doc) => {
+    const {title, src, year} = doc.data();
+
+    return {id: doc.id, title, src, year};
+  });
 }
 
 export default async function Home() {
@@ -12,10 +20,7 @@ export default async function Home() {
   return (
     <>
       <header className="flex justify-between items-center py-12 px-8">
-        <h1 className="text-2xl">\ ALED WASSELL</h1>
-        <Link href="/new" className="button">
-          New
-        </Link>
+        <h1 className="text-2xl self-start">\ ALED WASSELL</h1>
       </header>
 
       <div className="flex flex-wrap">
