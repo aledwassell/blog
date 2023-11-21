@@ -1,4 +1,3 @@
-import prisma from '@/db';
 import {MotionDiv} from '@/lib/motion';
 import {AiOutlineClose} from 'react-icons/ai';
 import Image from 'next/image';

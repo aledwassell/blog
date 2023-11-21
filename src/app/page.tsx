@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {PhotoItem} from '@/components/PhotoItem';
 import {collection, getDocs} from 'firebase/firestore';
 import {db} from '@/firebase/config';
