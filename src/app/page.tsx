@@ -1,54 +1,31 @@
-import Link from 'next/link';
-import prisma from '../db';
-import {TodoItem} from '@/components/TodoItem';
-import {redirect} from 'next/navigation';
 import {PhotoItem} from '@/components/PhotoItem';
-import {PhotoItemTwo} from '@/components/PhotoItemTwo';
+import {collection, getDocs} from 'firebase/firestore';
+import {db} from '@/firebase/config';
 
-function getTodos() {
-  return prisma.todo.findMany();
-}
-
-function getPhotos() {
-  return prisma.photo.findMany();
-}
-
-async function toggleTodo(id: string, complete: boolean) {
+async function getPhotos() {
   'use server';
 
-  await prisma.todo.update({where: {id}, data: {complete}});
-}
+  const photos = await getDocs(collection(db, 'photos'));
 
-async function deleteTodo(id: string) {
-  'use server';
+  return photos.docs.map((doc) => {
+    const {title, src, year} = doc.data();
 
-  await prisma.todo.delete({where: {id}});
-
-  redirect('/');
+    return {id: doc.id, title, src, year};
+  });
 }
 
 export default async function Home() {
-  const todos = await getTodos();
   const photos = await getPhotos();
 
   return (
     <>
       <header className="flex justify-between items-center py-12 px-8">
-        <h1 className="text-2xl">\ ALED WASSELL</h1>
-        <Link href="/new" className="button">
-          New
-        </Link>
+        <h1 className="text-2xl self-start">\ ALED WASSELL</h1>
       </header>
-
-      {/* <div className="flex gap-8 items-center">
-        {photos.map((photo, index) => (
-          <PhotoItem key={photo.id} {...photo} number={index + 1} />
-        ))}
-      </div> */}
 
       <div className="flex flex-wrap">
         {photos.map((photo, index) => (
-          <PhotoItemTwo key={photo.id} {...photo} number={index + 1} />
+          <PhotoItem key={photo.id} {...photo} number={index + 1} />
         ))}
       </div>
 

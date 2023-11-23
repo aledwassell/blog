@@ -4,21 +4,10 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
+    domains: ['res.cloudinary.com'],
+    loader: 'custom',
+    loaderFile: './src/utils/imageLoader.ts',
     dangerouslyAllowSVG: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'live.staticflickr.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
   },
 };
 
