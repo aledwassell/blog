@@ -14,7 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className="overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+    >
       <body className={`${workSans.className} bg-slate-100 text-slate-600`}>
         {children}
       </body>

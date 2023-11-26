@@ -1,3 +1,4 @@
+import {padNumber} from '@/utils/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -30,11 +31,4 @@ export function PhotoItem({id, title, src, number, year}: PhotoItemProps) {
       </div>
     </Link>
   );
-}
-
-function padNumber(value: number): string {
-  if (value > 10) return value.toString();
-
-  const stringValue = value.toString();
-  return stringValue.padStart(2, '0');
 }
