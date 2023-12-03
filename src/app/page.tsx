@@ -27,8 +27,8 @@ export default async function Home() {
           <h1 className="text-2xl text-white self-start">\ ALED WASSELL</h1>
         </header>
         <div className="flex flex-wrap h-full overflow-hidden">
-          {photos.map((photo) => (
-            <PhotoGroupLink key={photo.id} {...photo} />
+          {photos.map((photo, index) => (
+            <PhotoGroupLink key={photo.id} {...photo} index={index} />
           ))}
         </div>
       </div>

@@ -2,28 +2,33 @@ import {MotionDiv} from '@/lib/motion';
 import {cleanseString} from '@/utils/utils';
 import Image from 'next/image';
 import Link from 'next/link';
+import PhotoHoverEffect from './PhotoHoverEffect';
 
 type PhotoGroupProps = {
   id: string;
+  index: number;
   title: string;
   src: string;
 };
 
-export function PhotoGroupLink({id, title, src}: PhotoGroupProps) {
+export function PhotoGroupLink({id, index, title, src}: PhotoGroupProps) {
   return (
     <MotionDiv
       className="flex w-full aspect-video sm:w-1/2 sm:h-1/2 relative group"
-      whileHover={{scale: 1.01}}
+      whileHover={{scale: 1}}
       whileTap={{scale: 0.95}}
-      transition={{type: 'spring', stiffness: 200, damping: 17}}
+      transition={{
+        type: 'spring',
+        ease: 'easeInOut',
+        stiffness: 200,
+        damping: 50,
+      }}
     >
       <Link href={`#${cleanseString(title)}`}>
         <Image src={src} fill alt={title} style={{objectFit: 'cover'}} />
-        <div className="flex gap-2 w-full justify-between absolute bottom-0 opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="w-full flex justify-end gap-4 p-4 mb-4">
-            <h1 className="text-2xl bg-slate-50">{title}</h1>
-          </div>
-        </div>
+        <PhotoHoverEffect index={index}>
+          <h1 className="m-4 text-2xl text-black bg-slate-50">{title}</h1>
+        </PhotoHoverEffect>
       </Link>
     </MotionDiv>
   );
