@@ -14,7 +14,7 @@ type PhotoGroupProps = {
 export function PhotoGroupLink({id, index, title, src}: PhotoGroupProps) {
   return (
     <MotionDiv
-      className="flex w-full aspect-video sm:w-1/2 sm:h-1/2 relative group"
+      className="flex w-full sm:w-1/2 sm:h-1/2 relative group"
       whileHover={{scale: 1}}
       whileTap={{scale: 0.95}}
       transition={{

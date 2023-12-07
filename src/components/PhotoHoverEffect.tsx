@@ -1,12 +1,14 @@
 'use client';
 
-import {delay, motion} from 'framer-motion';
+import useWindowDimension from '@/hooks/useWindowDimension';
+import {motion} from 'framer-motion';
 
 const br = {
   className: 'bottom-0 right-0',
   variants: {
     initial: {clipPath: 'polygon(100% 100%, 100% 100%, 100% 100%)'},
     animate: {clipPath: 'polygon(100% 100%, 100% 60%, 60% 100%)'},
+    animateMobile: {clipPath: 'polygon(100% 100%, 100% 60%, 0% 100%)'},
   },
 };
 
@@ -15,6 +17,7 @@ const bl = {
   variants: {
     initial: {clipPath: 'polygon(0% 100%, 0% 100%, 0% 100%)'},
     animate: {clipPath: 'polygon(0% 100%, 0% 60%, 40% 100%)'},
+    animateMobile: {clipPath: 'polygon(0% 100%, 0% 60%, 100% 100%)'},
   },
 };
 
@@ -23,6 +26,7 @@ const tl = {
   variants: {
     initial: {clipPath: 'polygon(0% 0%, 0% 0%, 0% 0%)'},
     animate: {clipPath: 'polygon(0% 0%, 0% 40%, 40% 0%)'},
+    animateMobile: {clipPath: 'polygon(0% 0%, 0% 40%, 100% 0%)'},
   },
 };
 
@@ -31,6 +35,7 @@ const tr = {
   variants: {
     initial: {clipPath: 'polygon(100% 0%, 100% 0%, 100% 0%)'},
     animate: {clipPath: 'polygon(100% 0%, 60% 0%, 100% 40%)'},
+    animateMobile: {clipPath: 'polygon(100% 0%, 0% 0%, 100% 40%)'},
   },
 };
 
@@ -45,12 +50,17 @@ export default function PhotoHoverEffect({
 }) {
   const {variants, className} = overlayByIndex[index];
 
+  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  const isMobile = useWindowDimension().width < 640 && isMobileDevice;
+
   return (
     <motion.div
       className="absolute flex justify-center items-center text-4xl w-full h-full z-30"
       initial="initial"
-      animate="initial"
+      animate={isMobile ? 'animateMobile' : 'initial'}
       whileHover="animate"
+      whileTap={isMobile ? 'initial' : 'animate'}
     >
       <motion.div
         transition={{
