@@ -1,8 +1,8 @@
 'use client';
 
-import useWindowDimension from '@/hooks/useWindowDimension';
 import {motion} from 'framer-motion';
 import {platform} from 'os';
+import {useWindowSize} from 'usehooks-ts';
 
 const br = {
   className: 'bottom-0 right-0',
@@ -51,7 +51,8 @@ export default function PhotoHoverEffect({
 }) {
   const {variants, className} = overlayByIndex[index];
 
-  const isMobile = useWindowDimension().width < 640;
+  const {width} = useWindowSize();
+  const isMobile = width < 640;
 
   return (
     <motion.div
