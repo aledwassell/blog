@@ -1,7 +1,7 @@
 'use client';
 
+import {isScreenSizeMobile} from '@/utils/utils';
 import {motion} from 'framer-motion';
-import {platform} from 'os';
 import {useWindowSize} from 'usehooks-ts';
 
 const br = {
@@ -52,7 +52,7 @@ export default function PhotoHoverEffect({
   const {variants, className} = overlayByIndex[index];
 
   const {width} = useWindowSize();
-  const isMobile = width < 640;
+  const isMobile = isScreenSizeMobile(width);
 
   return (
     <motion.div
