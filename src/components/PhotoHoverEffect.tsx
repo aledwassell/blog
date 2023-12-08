@@ -2,6 +2,7 @@
 
 import useWindowDimension from '@/hooks/useWindowDimension';
 import {motion} from 'framer-motion';
+import {platform} from 'os';
 
 const br = {
   className: 'bottom-0 right-0',
@@ -50,9 +51,7 @@ export default function PhotoHoverEffect({
 }) {
   const {variants, className} = overlayByIndex[index];
 
-  const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  const isMobile = useWindowDimension().width < 640 && isMobileDevice;
+  const isMobile = useWindowDimension().width < 640;
 
   return (
     <motion.div
