@@ -3,9 +3,6 @@ import { MotionValue, motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
 
-// Remove.
-const backgroundColours = ['bg-teal-500', 'bg-purple-500', 'bg-rose-500', 'bg-cyan-500'];
-
 function useParallax(value: MotionValue<number>, distance: number) {
 	return useTransform(value, [0, 1], [-distance, distance]);
 }
@@ -17,7 +14,7 @@ export function PhotoGroupPage({ id, index, title }: { id: string; index: number
 	return (
 		<section
 			id={id}
-			className={`relative flex justify-center items-center h-screen w-full ${backgroundColours[index]} snap-center`}>
+			className={`relative flex justify-center items-center h-screen w-full bg-black snap-center`}>
 			<div
 				ref={textRef}
 				className="relative flex flex-col overflow-hidden">
