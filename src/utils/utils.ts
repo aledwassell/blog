@@ -7,7 +7,5 @@ export const padNumber = (value: number): string => {
 	return stringValue.padStart(2, '0');
 };
 
-export const cleanseString = (word: string): string => word.replace(/[^A-Z0-9]/gi, '');
-
 const smTailwindBreakpoint = 640;
 export const isScreenSizeMobile = (width: number): boolean => width < smTailwindBreakpoint;

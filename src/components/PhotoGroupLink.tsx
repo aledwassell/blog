@@ -1,15 +1,12 @@
 import { MotionDiv } from '@/lib/motion';
-import { cleanseString } from '@/utils/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import PhotoHoverEffect from './PhotoHoverEffect';
+import { Photo } from '@/models';
 
-type PhotoGroupProps = {
-	id: string;
+interface PhotoGroupProps extends Photo {
 	index: number;
-	title: string;
-	src: string;
-};
+}
 
 export function PhotoGroupLink({ id, index, title, src }: PhotoGroupProps) {
 	return (
@@ -23,7 +20,7 @@ export function PhotoGroupLink({ id, index, title, src }: PhotoGroupProps) {
 				stiffness: 200,
 				damping: 50,
 			}}>
-			<Link href={`#${cleanseString(title)}`}>
+			<Link href={`#${id}`}>
 				<Image
 					src={src}
 					fill
