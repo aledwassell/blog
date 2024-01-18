@@ -1,11 +1,9 @@
-import { PhotoItem } from '@/components/PhotoItem';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import { PhotoGroupLink } from '@/components/PhotoGroupLink';
-import { cleanseString } from '@/utils/utils';
 import { PhotoGroupPage } from '@/components/PhotoGroupPage';
 
-async function getPhotos() {
+async function getPhotoGroups() {
 	'use server';
 
 	const photos = await getDocs(collection(db, 'photos'));
@@ -18,7 +16,7 @@ async function getPhotos() {
 }
 
 export default async function Home() {
-	const photos = await getPhotos();
+	const photoGroups = await getPhotoGroups();
 
 	return (
 		<>
@@ -27,22 +25,22 @@ export default async function Home() {
 					<h1 className="text-2xl text-white self-start bg-black md:bg-transparent">\ ALED WASSELL</h1>
 				</header>
 				<div className="flex flex-wrap h-full overflow-hidden">
-					{photos.map((photo, index) => (
+					{photoGroups.map((group, index) => (
 						<PhotoGroupLink
-							key={photo.id}
-							{...photo}
+							key={group.id}
+							{...group}
 							index={index}
 						/>
 					))}
 				</div>
 			</div>
 
-			{photos.map((photo, index) => (
+			{photoGroups.map((group, index) => (
 				<PhotoGroupPage
-					id={cleanseString(photo.title)}
-					key={photo.id}
+					id={group.id}
+					key={group.id}
 					index={index}
-					title={photo.title}></PhotoGroupPage>
+					title={group.title}></PhotoGroupPage>
 			))}
 
 			<footer className="flex justify-between items-center py-24 px-8 snap-end">
