@@ -1,38 +1,46 @@
-import {PhotoItem} from '@/components/PhotoItem';
-import {collection, getDocs} from 'firebase/firestore';
-import {db} from '@/firebase/config';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/firebase/config';
+import { PhotoGroupLink } from '@/components/PhotoGroupLink';
+import { PhotoGroupPage } from '@/components/PhotoGroupPage';
 
-async function getPhotos() {
-  'use server';
+async function getPhotoGroups() {
+	'use server';
 
-  const photos = await getDocs(collection(db, 'photos'));
+	const photos = await getDocs(collection(db, 'photos'));
 
-  return photos.docs.map((doc) => {
-    const {title, src, year} = doc.data();
+	return photos.docs.map(doc => {
+		const { title, src, year } = doc.data();
 
-    return {id: doc.id, title, src, year};
-  });
+		return { id: doc.id, title, src, year };
+	});
 }
 
 export default async function Home() {
-  const photos = await getPhotos();
+	const photoGroups = await getPhotoGroups();
 
-  return (
-    <>
-      <header className="flex justify-between items-center py-12 px-8">
-        <h1 className="text-2xl self-start">\ ALED WASSELL</h1>
-      </header>
+	return (
+		<>
+			<div className="h-screen snap-center">
+				<header className="absolute z-10 top-0 left-0 flex justify-between items-center pt-6 md:pt-12 pl-4 md:pl-8">
+					<h1 className="text-2xl text-white self-start bg-black md:bg-transparent">\ ALED WASSELL</h1>
+				</header>
+				<div className="flex flex-wrap h-full overflow-hidden">
+					{photoGroups.map((group, index) => (
+						<PhotoGroupLink
+							key={group.id}
+							{...group}
+							index={index}
+						/>
+					))}
+				</div>
+			</div>
 
-      <div className="flex flex-wrap">
-        {photos.map((photo, index) => (
-          <PhotoItem key={photo.id} {...photo} number={index + 1} />
-        ))}
-      </div>
-
-      <footer className="flex justify-between items-center py-24 px-8">
-        <div></div>
-        <span>aled wassell \ copyright {new Date().getFullYear()}</span>
-      </footer>
-    </>
-  );
+			{photoGroups.map(group => (
+				<PhotoGroupPage
+					id={group.id}
+					key={group.id}
+					title={group.title}></PhotoGroupPage>
+			))}
+		</>
+	);
 }
