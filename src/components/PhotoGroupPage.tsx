@@ -1,41 +1,29 @@
-'use client';
-import { MotionValue, motion, useScroll, useTransform } from 'framer-motion';
-import Image from 'next/image';
-import { useRef } from 'react';
+import { PhotoGallery } from './PhotoGallery';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/firebase/config';
 
-function useParallax(value: MotionValue<number>, distance: number) {
-	return useTransform(value, [0, 1], [-distance, distance]);
+async function getPhotos(id: string) {
+	const photos = await getDocs(collection(db, 'photos', id, 'photos'));
+
+	return photos.docs.map(doc => {
+		const { title, src, year } = doc.data();
+
+		return { id: doc.id, title, src, year };
+	});
 }
 
-export function PhotoGroupPage({ id, index, title }: { id: string; index: number; title: string }) {
-	const textRef = useRef(null);
-	const y = useParallax(useScroll({ target: textRef }).scrollYProgress, 500);
+export async function PhotoGroupPage({ id, title }: { id: string; title: string }) {
+	const photos = await getPhotos(id);
 
 	return (
 		<section
 			id={id}
-			className={`relative flex justify-center items-center h-screen w-full bg-black snap-center`}>
-			<div
-				ref={textRef}
-				className="relative flex flex-col overflow-hidden">
-				<h1 className="text-4xl text-white">{title}</h1>
-				<Image
-					src="bwmp566tibvopv2vyp8i.jpg"
-					width={400}
-					height={600}
-					alt={title}
-					style={{ objectFit: 'cover' }}
-				/>
-			</div>
-			<motion.div
-				style={{ y }}
-				className="absolute right-0 bottom-0 lg:right-1/4 lg:bottom-1/4 bg-black text-white p-4 max-w-xs">
-				<h2 className="text-2xl pb-2">MOTION DIV</h2>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ultricies massa metus, non pellentesque ex vehicula nec. Maecenas lorem eros, sollicitudin lacinia elit a,
-					viverra malesuada leo. Quisque consectetur mollis neque eget egestas.
-				</p>
-			</motion.div>
+			className="relative h-screen w-full flex justify-center items-center overflow-y-hidden overflow-x-hidden bg-black snap-y snap-center text-white">
+			{photos.length <= 0 && <span>No Photos to show...</span>}
+
+			<div className="absolute z-20 flex justify-center items-center">{photos.length > 0 && <h1>{title}</h1>}</div>
+
+			{photos.length > 0 && <PhotoGallery photos={photos}></PhotoGallery>}
 		</section>
 	);
 }
