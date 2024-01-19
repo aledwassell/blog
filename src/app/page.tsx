@@ -35,18 +35,12 @@ export default async function Home() {
 				</div>
 			</div>
 
-			{photoGroups.map((group, index) => (
+			{photoGroups.map(group => (
 				<PhotoGroupPage
 					id={group.id}
 					key={group.id}
-					index={index}
 					title={group.title}></PhotoGroupPage>
 			))}
-
-			<footer className="flex justify-between items-center py-24 px-8 snap-end">
-				<div></div>
-				<span>aled wassell \ copyright {new Date().getFullYear()}</span>
-			</footer>
 		</>
 	);
 }
