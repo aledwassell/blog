@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import { Xanh_Mono, Work_Sans } from 'next/font/google';
 import './globals.css';
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+
+config.autoAddCss = false;
 
 const xanhMono = Xanh_Mono({ subsets: ['latin'], weight: '400' });
 const workSans = Work_Sans({ subsets: ['latin'], weight: '400' });
