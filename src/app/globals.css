@@ -9,3 +9,7 @@
 .text-input {
 	@apply border border-slate-600 bg-transparent rounded px-2 py-1 outline-none focus-within:border-slate-600;
 }
+
+.floating-carousel-button {
+	@apply absolute top-1/2 transform -translate-y-1/2 flex justify-center items-center select-none cursor-pointer font-bold text-lg z-10 bg-white rounded-full w-10 h-10;
+}
