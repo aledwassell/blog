@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { wrap } from 'popmotion';
@@ -42,8 +43,6 @@ const swipePower = (offset: number, velocity: number) => {
 };
 
 export function PhotoGallery({ photos }: { photos: Photo[] }) {
-	photos = photos.map(p => ({ ...p, src: `https://res.cloudinary.com/aled-photography/image/upload${p.src}` }));
-
 	const [[page, direction], setPage] = useState([0, 0]);
 
 	const imageIndex = wrap(0, photos.length, page);
@@ -57,10 +56,9 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
 			<AnimatePresence
 				initial={false}
 				custom={direction}>
-				<motion.img
-					className="absolute"
+				<motion.div
+					className="absolute w-full h-full"
 					key={page}
-					src={photos[imageIndex]?.src}
 					custom={direction}
 					variants={variants}
 					initial="enter"
@@ -81,8 +79,15 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
 						} else if (swipe > swipeConfidenceThreshold) {
 							paginate(-1);
 						}
-					}}
-				/>
+					}}>
+					<Image
+						src={photos[imageIndex]?.src}
+						alt={photos[imageIndex]?.title}
+						fill
+						sizes="100vw"
+						style={{ objectFit: 'cover' }}
+					/>
+				</motion.div>
 			</AnimatePresence>
 
 			<div
