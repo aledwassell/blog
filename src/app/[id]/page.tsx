@@ -4,14 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/firebase/config';
-
-type PhotoProps = {
-	params: { id: string };
-	searchParams: {
-		src: string;
-		title: string;
-	};
-};
+import { PhotoProps } from '@/models';
 
 async function getPhoto(id: string) {
 	'use server';

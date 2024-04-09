@@ -2,11 +2,7 @@ import { MotionDiv } from '@/lib/motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import PhotoHoverEffect from './PhotoHoverEffect';
-import { Photo } from '@/models';
-
-interface PhotoGroupProps extends Photo {
-	index: number;
-}
+import { PhotoGroupProps } from '@/models';
 
 export function PhotoGroupLink({ id, index, title, src }: PhotoGroupProps) {
 	return (

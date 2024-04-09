@@ -1,14 +1,7 @@
+import { PhotoItemProps } from '@/models';
 import { padNumber } from '@/utils/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-
-type PhotoItemProps = {
-	id: string;
-	title: string;
-	number: number;
-	src: string;
-	year: string;
-};
 
 export function PhotoItem({ id, title, src, number, year }: PhotoItemProps) {
 	return (
