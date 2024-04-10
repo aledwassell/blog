@@ -1,39 +1,38 @@
 'use client';
 
+import { useHash } from '@/Hooks/useHash';
+import { NavItem } from '@/models';
 import Link from 'next/link';
-import { useParams, usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-const useHash = () => {
-	const params = useParams();
-	const [hash, setHash] = useState('');
-
-	useEffect(() => {
-		const currentHash = window.location.hash.replace('#', '');
-		setHash(currentHash);
-	}, [params]);
-
-	return hash;
-};
-
-export function Nav() {
-	const pathname = usePathname();
+export function Nav({ navItems }: { navItems: NavItem[] }) {
 	const hash = useHash();
+	const router = useRouter();
 
-	const navItems = [
-		{ slug: '#london', label: 'London' },
-		{ slug: '#scotland', label: 'Scotland' },
-		{ slug: '#street', label: 'Street' },
-		{ slug: '#tokyo-japan', label: 'Tokyo / Japan' },
-	];
+	if (typeof window !== 'undefined') {
+		const windowHeight = window.innerHeight;
+
+		const sections = navItems.map(navItem => document.getElementById(navItem.slug));
+
+		document.addEventListener('scroll', () => {
+			for (const section of sections) {
+				const rect = section?.getBoundingClientRect();
+				const newHash = `#${section?.id}`;
+				if (rect!.top === 0 && rect!.bottom <= windowHeight) {
+					router.push(newHash);
+				}
+			}
+		});
+	}
+
 	return (
-		<ul>
+		<ul className="flex flex-wrap gap-1 justify-around items-center lg:items-start lg:flex-col">
 			{navItems.map(item => (
 				<li key={item.slug}>
 					<Link
-						className={`${`#${hash}` === item.slug ? 'text-emerald-400 text-lg font-bold' : ''}`}
-						href={`/${item.slug}`}>
-						{item.label}
+						href={`#${item.slug}`}
+						className={`${hash === item.slug ? 'text-emerald-400 font-bold' : ''} text-2xl lg:text-base group`}>
+						{item.title}
 					</Link>
 				</li>
 			))}
