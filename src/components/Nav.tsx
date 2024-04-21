@@ -16,9 +16,12 @@ export function Nav({ navItems }: { navItems: NavItem[] }) {
 
 		document.addEventListener('scroll', () => {
 			for (const section of sections) {
+                const newHash = `#${section?.id}`;
+                
 				const rect = section?.getBoundingClientRect();
-				const newHash = `#${section?.id}`;
-				if (rect!.top === 0 && rect!.bottom <= windowHeight) {
+				const rectTop = Math.round(rect?.top || 0);
+				const rectBottom = Math.round(rect?.bottom || 0);
+				if (!rectTop && rectBottom <= windowHeight) {
 					router.push(newHash);
 				}
 			}
