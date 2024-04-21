@@ -23,7 +23,7 @@ export default async function Home() {
 
 	return (
 		<>
-			<div className="h-screen snap-center">
+			<div className="h-dvh snap-center">
 				<header className="absolute z-10 top-0 left-0 flex justify-between items-center pt-6 md:pt-12 pl-4 md:pl-8">
 					<h1 className="text-2xl text-white self-start bg-black md:bg-transparent">\ ALED WASSELL</h1>
 				</header>
