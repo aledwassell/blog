@@ -20,7 +20,7 @@ export async function PhotoGroupPage({ id, title, navItems }: { id: string; titl
 	return (
 		<section
 			id={id}
-			className="relative h-screen w-full flex flex-col items-center overflow-y-hidden overflow-x-hidden bg-black snap-y snap-center text-white">
+			className="relative h-dvh w-full flex flex-col items-center overflow-y-hidden overflow-x-hidden bg-black snap-y snap-center text-white">
 			{photos.length <= 0 && <span>No Photos to show...</span>}
 			<div className="z-20 p-4 lg:ml-0 lg:mt-12 w-full lg:w-4/5">
 				<h1 className="text-4xl">{photos.length > 0 && title}</h1>
