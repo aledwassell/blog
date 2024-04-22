@@ -4,28 +4,23 @@ import { useHash } from '@/Hooks/useHash';
 import { NavItem } from '@/models';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { scroll } from 'framer-motion/dom';
 
 export function Nav({ navItems }: { navItems: NavItem[] }) {
 	const hash = useHash();
 	const router = useRouter();
 
 	if (typeof window !== 'undefined') {
-		const windowHeight = window.innerHeight;
-
 		const sections = navItems.map(navItem => document.getElementById(navItem.slug));
 
-		document.addEventListener('scroll', () => {
-			for (const section of sections) {
-                const newHash = `#${section?.id}`;
-                
-				const rect = section?.getBoundingClientRect();
-				const rectTop = Math.round(rect?.top || 0);
-				const rectBottom = Math.round(rect?.bottom || 0);
-				if (!rectTop && rectBottom <= windowHeight) {
-					router.push(newHash);
-				}
-			}
-		});
+		scroll(
+			() => {
+				const currentSectionId = sections.filter(section => section?.getBoundingClientRect().top === 0)[0]?.id;
+
+				if (currentSectionId && currentSectionId != hash) router.push(`#${currentSectionId}`);
+			},
+			{ axis: 'y' }
+		);
 	}
 
 	return (
