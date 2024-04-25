@@ -29,7 +29,7 @@ export function Nav({ navItems }: { navItems: NavItem[] }) {
 				<li key={item.slug}>
 					<Link
 						href={`#${item.slug}`}
-						className={`${hash === item.slug ? 'text-emerald-400 font-bold' : ''} text-2xl lg:text-base group`}>
+						className={`${hash === item.slug ? 'text-emerald-400 font-bold' : ''} flex items-center min-h-11 lg:min-h-6 text-2xl lg:text-base group`}>
 						{item.title}
 					</Link>
 				</li>
