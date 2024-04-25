@@ -10,18 +10,16 @@ export function Nav({ navItems }: { navItems: NavItem[] }) {
 	const hash = useHash();
 	const router = useRouter();
 
-	if (typeof window !== 'undefined') {
-		const sections = navItems.map(navItem => document.getElementById(navItem.slug));
+	const sections = navItems.map(navItem => document.getElementById(navItem.slug));
 
-		scroll(
-			() => {
-				const currentSectionId = sections.filter(section => section?.getBoundingClientRect().top === 0)[0]?.id;
+	scroll(
+		() => {
+			const currentSectionId = sections.filter(section => section?.getBoundingClientRect().top === 0)[0]?.id;
 
-				if (currentSectionId && currentSectionId != hash) router.push(`#${currentSectionId}`);
-			},
-			{ axis: 'y' }
-		);
-	}
+			if (currentSectionId && currentSectionId != hash) router.push(`#${currentSectionId}`);
+		},
+		{ axis: 'y' }
+	);
 
 	return (
 		<ul className="flex flex-wrap gap-1 justify-around items-center lg:items-start lg:flex-col">

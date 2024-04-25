@@ -25,7 +25,9 @@ export async function PhotoGroupPage({ id, title, navItems }: { id: string; titl
 			<div className="z-20 p-4 lg:ml-0 lg:mt-12 w-full lg:w-4/5">
 				<h1 className="text-4xl">{photos.length > 0 && title}</h1>
 			</div>
+
 			<div className="relative flex-1 w-full lg:w-4/5 flex justify-center items-center">{photos.length > 0 && <PhotoGallery photos={photos}></PhotoGallery>}</div>
+
 			<div className="z-20 w-full p-4 lg:pl-0 lg:pb-12 lg:w-4/5">
 				<Nav navItems={navItems} />
 			</div>
