@@ -57,7 +57,7 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
 				initial={false}
 				custom={direction}>
 				<motion.div
-					className="absolute w-full h-full"
+					className="absolute h-full w-full aspect-video lg:h-fit lg:w-4/5"
 					key={page}
 					custom={direction}
 					variants={variants}
@@ -87,6 +87,7 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
 						sizes="100vw"
 						style={{ objectFit: 'cover' }}
 					/>
+					<h2 className="absolute bottom-2 right-2 lg:-bottom-8 lg:right-0">{photos[imageIndex]?.title}</h2>
 				</motion.div>
 			</AnimatePresence>
 
