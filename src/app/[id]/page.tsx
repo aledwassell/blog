@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import { PhotoProps } from '@/models';
+import { redirect } from 'next/navigation';
 
 async function getPhoto(id: string) {
 	'use server';
@@ -17,6 +18,7 @@ async function getPhoto(id: string) {
 		return photo.data();
 	} else {
 		console.error(`No photo found with ID ${id}!`);
+		redirect('/');
 	}
 }
 
