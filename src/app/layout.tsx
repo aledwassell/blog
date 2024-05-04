@@ -21,6 +21,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html
 			lang="en"
 			className="overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+			<head>
+				<link
+					rel="icon"
+					href="/favicon.ico"
+					sizes="any"
+				/>
+			</head>
 			<body className={`${workSans.className} bg-slate-100 text-slate-600`}>{children}</body>
 		</html>
 	);
