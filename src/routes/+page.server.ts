@@ -1,5 +1,7 @@
 import { FLICKR_API_KEY, FLICKR_USER_ID } from '$env/static/private';
 
+export const prerender = true;
+
 interface FlickrPhoto {
 	id: string;
 	title: string;
