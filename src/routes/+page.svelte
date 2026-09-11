@@ -1,9 +1,49 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	let { data } = $props();
+
+	const SCROLL_THRESHOLD = 250;
+
+	function lerp(a: number, b: number, t: number) {
+		return a + (b - a) * t;
+	}
+
+	onMount(() => {
+		const header = document.getElementById('site-header') as HTMLElement;
+		const title = document.getElementById('site-title') as HTMLElement;
+		const subtitle = document.getElementById('site-subtitle') as HTMLElement;
+
+		const handler = () => {
+			const p = Math.min(window.scrollY / SCROLL_THRESHOLD, 1);
+			header.style.paddingTop = `${lerp(48, 14, p)}px`;
+			header.style.paddingBottom = `${lerp(48, 14, p)}px`;
+			title.style.fontSize = `${lerp(5, 1.25, p)}rem`;
+			subtitle.style.opacity = `${lerp(1, 0, p)}`;
+			subtitle.style.marginTop = `${lerp(6, 0, p)}px`;
+		};
+
+		window.addEventListener('scroll', handler, { passive: true });
+		return () => window.removeEventListener('scroll', handler);
+	});
 </script>
 
+<header
+	id="site-header"
+	class="sticky top-0 z-10 px-6 text-center"
+	style="background-color: var(--color-background); padding-top: 48px; padding-bottom: 48px;"
+>
+	<div class="mx-auto w-fit">
+		<h1 id="site-title" class="font-bold" style="font-size: 5rem; line-height: 1;">
+			blog<span class="text-pink-500">.</span>
+		</h1>
+		<p id="site-subtitle" class="text-right" style="font-size: 0.75rem; margin-top: 6px;">
+			aledwassell.dev
+		</p>
+	</div>
+</header>
+
 <main class="mx-auto max-w-3xl px-6 py-12">
-	<h1 class="mb-10 text-2xl">Photos</h1>
 	<div class="flex flex-col gap-12">
 		{#each data.photos as photo}
 			<article>
