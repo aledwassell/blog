@@ -3,6 +3,8 @@ import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
+const base = process.env.NODE_ENV === 'production' ? '/blog' : '';
+
 export default defineConfig({
 	plugins: [
 		tailwindcss(),
@@ -12,6 +14,7 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
+			kit: { paths: { base } },
 			adapter: adapter()
 		})
 	]
