@@ -64,7 +64,7 @@ function extractAttr(xml: string, tag: string, attr: string): string {
 export async function load() {
 	const [flickrRes, channelRes, soundcloudRes] = await Promise.all([
 		fetch(
-			`https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=${FLICKR_API_KEY}&user_id=${encodeURIComponent(FLICKR_USER_ID)}&format=json&nojsoncallback=1&extras=url_m,title,description,date_taken&per_page=20`
+			`https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${FLICKR_API_KEY}&user_id=${encodeURIComponent(FLICKR_USER_ID)}&photoset_id=72177720335630790&format=json&nojsoncallback=1&extras=url_m,title,description,date_taken&per_page=100`
 		),
 		fetch(
 			`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=albatrosspiano&key=${YOUTUBE_API_KEY}`
@@ -83,7 +83,7 @@ export async function load() {
 	);
 	const videosData = await videosRes.json();
 
-	const photos: BlogItem[] = flickrData.photos.photo.map((p: FlickrPhoto) => ({
+	const photos: BlogItem[] = flickrData.photoset.photo.map((p: FlickrPhoto) => ({
 		type: 'photo' as const,
 		id: p.id,
 		title: p.title,
