@@ -37,9 +37,13 @@
 		<h1 id="site-title" class="font-bold" style="font-size: 5rem; line-height: 1;">
 			blog<span class="text-pink-500">.</span>
 		</h1>
-		<p id="site-subtitle" class="text-right" style="font-size: 0.75rem; margin-top: 6px;">
+		<a
+			href="https://aledwassell.dev"
+			class="block text-right py-2 text-white transition-colors duration-300 hover:text-pink-500 text-sm"
+			id="site-subtitle"
+		>
 			aledwassell.dev
-		</p>
+		</a>
 	</div>
 </header>
 
