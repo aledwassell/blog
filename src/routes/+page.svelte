@@ -52,7 +52,7 @@
 		{#each data.items as item (item.id)}
 			<article>
 				{#if item.type === 'photo'}
-					<img src={item.url} alt={item.title} width={item.width} height={item.height} class="w-full" />
+					<img src={item.url} alt={item.title} width={item.width} height={item.height} class="w-full" loading="lazy" />
 				{:else if item.type === 'video'}
 					<div class="relative w-full" style="padding-bottom: 56.25%;">
 						<iframe
@@ -61,6 +61,7 @@
 							frameborder="0"
 							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen
+							loading="lazy"
 							class="absolute inset-0 h-full w-full"
 						></iframe>
 					</div>
@@ -71,6 +72,7 @@
 						scrolling="no"
 						frameborder="no"
 						allow="autoplay"
+						loading="lazy"
 						title={item.title}
 						src="https://w.soundcloud.com/player/?url={encodeURIComponent(item.trackUrl)}&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false"
 					></iframe>
