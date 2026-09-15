@@ -41,20 +41,40 @@ export type BlogItem =
 			date: string;
 			videoId: string;
 			thumbnailUrl: string;
+	  }
+	| {
+			type: 'track';
+			id: string;
+			title: string;
+			date: string;
+			trackUrl: string;
+			artworkUrl: string;
 	  };
 
+function extractTag(xml: string, tag: string): string {
+	const match = xml.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`));
+	return match ? match[1].trim() : '';
+}
+
+function extractAttr(xml: string, tag: string, attr: string): string {
+	const match = xml.match(new RegExp(`<${tag}[^>]+${attr}="([^"]*)"[^>]*>`));
+	return match ? match[1] : '';
+}
+
 export async function load() {
-	const [flickrRes, channelRes] = await Promise.all([
+	const [flickrRes, channelRes, soundcloudRes] = await Promise.all([
 		fetch(
 			`https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=${FLICKR_API_KEY}&user_id=${encodeURIComponent(FLICKR_USER_ID)}&format=json&nojsoncallback=1&extras=url_m,title,description,date_taken&per_page=20`
 		),
 		fetch(
 			`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle=albatrosspiano&key=${YOUTUBE_API_KEY}`
-		)
+		),
+		fetch('https://feeds.soundcloud.com/users/soundcloud:users:60934003/sounds.rss')
 	]);
 
 	const flickrData = await flickrRes.json();
 	const channelData = await channelRes.json();
+	const soundcloudXml = await soundcloudRes.text();
 
 	const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
 
@@ -84,7 +104,20 @@ export async function load() {
 		thumbnailUrl: v.snippet.thumbnails.high.url
 	}));
 
-	const items = [...photos, ...videos].sort(
+	const itemMatches = soundcloudXml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
+	const tracks: BlogItem[] = itemMatches.map((item) => {
+		const guid = extractTag(item, 'guid');
+		return {
+			type: 'track' as const,
+			id: guid.split('/').pop() ?? guid,
+			title: extractTag(item, 'title'),
+			date: extractTag(item, 'pubDate'),
+			trackUrl: extractTag(item, 'link'),
+			artworkUrl: extractAttr(item, 'itunes:image', 'href')
+		};
+	});
+
+	const items = [...photos, ...videos, ...tracks].sort(
 		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 	);
 

@@ -45,11 +45,11 @@
 
 <main class="mx-auto max-w-3xl px-6 py-12">
 	<div class="flex flex-col gap-12">
-		{#each data.items as item}
+		{#each data.items as item (item.id)}
 			<article>
 				{#if item.type === 'photo'}
 					<img src={item.url} alt={item.title} width={item.width} height={item.height} class="w-full" />
-				{:else}
+				{:else if item.type === 'video'}
 					<div class="relative w-full" style="padding-bottom: 56.25%;">
 						<iframe
 							src="https://www.youtube.com/embed/{item.videoId}"
@@ -60,6 +60,16 @@
 							class="absolute inset-0 h-full w-full"
 						></iframe>
 					</div>
+				{:else}
+					<iframe
+						width="100%"
+						height="166"
+						scrolling="no"
+						frameborder="no"
+						allow="autoplay"
+						title={item.title}
+						src="https://w.soundcloud.com/player/?url={encodeURIComponent(item.trackUrl)}&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false"
+					></iframe>
 				{/if}
 				<div class="mt-3">
 					{#if item.title}
