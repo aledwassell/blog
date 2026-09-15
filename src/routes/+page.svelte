@@ -45,25 +45,32 @@
 
 <main class="mx-auto max-w-3xl px-6 py-12">
 	<div class="flex flex-col gap-12">
-		{#each data.photos as photo}
+		{#each data.items as item}
 			<article>
-				<img
-					src={photo.url}
-					alt={photo.title}
-					width={photo.width}
-					height={photo.height}
-					class="w-full"
-				/>
+				{#if item.type === 'photo'}
+					<img src={item.url} alt={item.title} width={item.width} height={item.height} class="w-full" />
+				{:else}
+					<div class="relative w-full" style="padding-bottom: 56.25%;">
+						<iframe
+							src="https://www.youtube.com/embed/{item.videoId}"
+							title={item.title}
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+							class="absolute inset-0 h-full w-full"
+						></iframe>
+					</div>
+				{/if}
 				<div class="mt-3">
-					{#if photo.title}
-						<h2 class="text-base">{photo.title}</h2>
+					{#if item.title}
+						<h2 class="text-base">{item.title}</h2>
 					{/if}
-					{#if photo.description}
-						<p class="mt-1 text-sm text-neutral-500">{photo.description}</p>
+					{#if item.description}
+						<p class="mt-1 text-sm text-neutral-500">{item.description}</p>
 					{/if}
-					{#if photo.dateTaken}
+					{#if item.date}
 						<time class="mt-1 block text-xs text-neutral-600">
-							{new Date(photo.dateTaken).toLocaleDateString('en-GB', {
+							{new Date(item.date).toLocaleDateString('en-GB', {
 								day: 'numeric',
 								month: 'long',
 								year: 'numeric'
