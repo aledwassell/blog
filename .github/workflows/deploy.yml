@@ -39,6 +39,7 @@ jobs:
         env:
           FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
           FLICKR_USER_ID: ${{ secrets.FLICKR_USER_ID }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
