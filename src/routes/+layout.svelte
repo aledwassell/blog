@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Aled Wassell — blog</title>
+	<title>aled wassell — blog</title>
 	<meta name="description" content="Music, photos and videos by Aled Wassell" />
 	<link rel="icon" href={favicon} />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
