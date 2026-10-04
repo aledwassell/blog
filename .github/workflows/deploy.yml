@@ -2,8 +2,7 @@ name: Deploy SvelteKit to Pages
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-      timezone: 'Europe/London'
+    - cron: '16 8 * * 0'
     
   push:
     branches: [master]
