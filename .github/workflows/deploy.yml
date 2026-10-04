@@ -1,6 +1,10 @@
 name: Deploy SvelteKit to Pages
 
 on:
+  schedule:
+    - cron: '42 7 * * 0'
+      timezone: 'Europe/London'
+    
   push:
     branches: [master]
   workflow_dispatch:
