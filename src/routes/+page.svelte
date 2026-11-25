@@ -52,7 +52,15 @@
 		{#each data.items as item (item.id)}
 			<article>
 				{#if item.type === 'photo'}
-					<img src={item.url} alt={item.title} width={item.width} height={item.height} class="w-full" loading="lazy" />
+					{#if item.photos && item.photos.length > 1}
+						<div class="grid grid-cols-2 gap-1">
+							{#each item.photos as photoUrl, i (photoUrl)}
+								<img src={photoUrl} alt="{item.title} {i + 1}" class="w-full object-cover" loading="lazy" />
+							{/each}
+						</div>
+					{:else}
+						<img src={item.url} alt={item.title} width={item.width} height={item.height} class="w-full" loading="lazy" />
+					{/if}
 				{:else if item.type === 'video'}
 					<div class="relative w-full" style="padding-bottom: 56.25%;">
 						<iframe

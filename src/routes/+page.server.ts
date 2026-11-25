@@ -31,7 +31,8 @@ export type BlogItem =
 			date: string;
 			url: string;
 			width: number;
-			height: number;
+      height: number;
+      photos?: string[];
 	  }
 	| {
 			type: 'video';
@@ -83,16 +84,31 @@ export async function load() {
 	);
 	const videosData = await videosRes.json();
 
-	const photos: BlogItem[] = flickrData.photoset.photo.map((p: FlickrPhoto) => ({
-		type: 'photo' as const,
-		id: p.id,
-		title: p.title,
-		description: p.description._content,
-		date: p.datetaken,
-		url: p.url_m,
-		width: p.width_m,
-		height: p.height_m
-	}));
+  type PhotoItem = Extract<BlogItem, { type: 'photo' }>;
+
+  const rawPhotos: PhotoItem[] = flickrData.photoset.photo.map((p: FlickrPhoto) => ({
+    type: 'photo' as const,
+    id: p.id,
+    title: p.title,
+    description: p.description._content,
+    date: p.datetaken,
+    url: p.url_m,
+    width: p.width_m,
+    height: p.height_m
+  }));
+
+  const photoGroups = new Map<string, PhotoItem[]>();
+  for (const photo of rawPhotos) {
+    const group = photoGroups.get(photo.title) ?? [];
+    group.push(photo);
+    photoGroups.set(photo.title, group);
+  }
+
+  const photos: BlogItem[] = Array.from(photoGroups.values()).map((group) => {
+    if (group.length === 1) return group[0];
+    const [first, ...rest] = group;
+    return { ...first, photos: [first.url, ...rest.map((p) => p.url)] };
+  });
 
 	const videos: BlogItem[] = videosData.items.map((v: YouTubePlaylistItem) => ({
 		type: 'video' as const,
